@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_JATOMS_VIEW_SHOWCASES" option="COM_JATOMS_VIEW_SHOWCASES_DEFAULT_OPTION">
+		<message>
+			<![CDATA[COM_JATOMS_VIEW_SHOWCASES_DESCRIPTION]]>
+		</message>
+	</layout>
+	<fields name="request" addfieldpath="/administrator/components/com_jatoms/models/fields">
+		<fieldset name="request">
+			<field name="root" type="hidden" default="1"/>
+		</fieldset>
+	</fields>
+	<fields name="params">
+		<fieldset name="settings" label="JFIELD_PARAMS_LABEL">
+			<field name="showcases_limit" type="integer"
+				   label="COM_JATOMS_PARAMS_SHOWCASES_LIMIT"
+				   first="1"
+				   last="50"
+				   step="1"
+				   useglobal="true"/>
+			<field name="showcase_layout" type="componentlayout"
+				   label="COM_JATOMS_PARAMS_SHOWCASE_LAYOUT"
+				   useglobal="true"
+				   extension="com_jatoms"
+				   view="showcase"/>
+			<field name="tours_limit" type="integer"
+				   label="COM_JATOMS_PARAMS_TOURS_LIMIT"
+				   first="1"
+				   last="50"
+				   step="1"
+				   useglobal="true"/>
+			<field name="tour_layout" type="componentlayout"
+				   label="COM_JATOMS_PARAMS_TOUR_LAYOUT"
+				   useglobal="true"
+				   extension="com_jatoms"
+				   view="tour"/>
+		</fieldset>
+	</fields>
+</metadata>

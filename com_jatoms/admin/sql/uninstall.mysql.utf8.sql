@@ -1,0 +1,1 @@
+DROP TABLE `#__jatoms_showcases`;

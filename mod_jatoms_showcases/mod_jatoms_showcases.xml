@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.9" type="module" client="site" method="upgrade">
+	<name>MOD_JATOMS_SHOWCASES</name>
+	<author>Septdir Workshop</author>
+	<creationDate>May 2019</creationDate>
+	<copyright>Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.</copyright>
+	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>development@septdir.com</authorEmail>
+	<authorUrl>https://www.septdir.com/</authorUrl>
+	<version>1.0.0</version>
+	<description>MOD_JATOMS_SHOWCASES_DESCRIPTION</description>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.mod_jatoms_showcases.ini</language>
+		<language tag="en-GB">en-GB/en-GB.mod_jatoms_showcases.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.mod_jatoms_showcases.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.mod_jatoms_showcases.sys.ini</language>
+	</languages>
+	<files>
+		<filename module="mod_jatoms_showcases">mod_jatoms_showcases.php</filename>
+		<filename>helper.php</filename>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/administrator/components/com_jatoms/models/fields">
+				<field name="showcases" type="showcases"
+					   label="MOD_JATOMS_SHOWCASES_PARAMS_SHOWCASES" multiple="true"/>
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="ajax" type="radio"
+					   label="MOD_JATOMS_SHOWCASES_PARAMS_AJAX"
+					   class="btn-group btn-group-yesno"
+					   default="0">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="layout" type="modulelayout"
+					   label="JFIELD_ALT_LAYOUT_LABEL"
+					   description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+				<field name="moduleclass_sfx" type="textarea"
+					   label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					   description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"
+					   rows="3"/>
+				<field name="cache" type="list"
+					   label="COM_MODULES_FIELD_CACHING_LABEL"
+					   description="COM_MODULES_FIELD_CACHING_DESC"
+					   default="1">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time" type="text"
+					   label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					   description="COM_MODULES_FIELD_CACHE_TIME_DESC"
+					   default="900"/>
+				<field name="cachemode" type="hidden"
+					   default="static">
+					<option value="static"/>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+	<media destination="mod_jatoms_showcases" folder="media">
+		<folder>js</folder>
+	</media>
+</extension>

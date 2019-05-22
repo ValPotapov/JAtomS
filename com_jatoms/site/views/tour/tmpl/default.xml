@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_JATOMS_VIEW_TOUR" option="COM_JATOMS_VIEW_TOUR_DEFAULT_OPTION">
+		<message>
+			<![CDATA[COM_JATOMS_VIEW_TOUR_DESCRIPTION]]>
+		</message>
+	</layout>
+	<fields name="request" addfieldpath="/administrator/components/com_jatoms/models/fields">
+		<fieldset name="request">
+			<field name="id" type="text" label="JGLOBAL_FIELD_ID_LABEL" required="true"/>
+			<field name="showcase_id" type="showcases"
+				   label="COM_JATOMS_SHOWCASE"
+				   required="true">
+				<option value="">COM_JATOMS_SHOWCASE_SELECT</option>
+			</field>
+			<field name="root" type="hidden" default="1"/>
+		</fieldset>
+	</fields>
+</metadata>

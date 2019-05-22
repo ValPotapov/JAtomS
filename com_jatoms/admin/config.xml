@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<config>
+	<fieldset name="global" label="JGLOBAL_FIELDSET_OPTIONS">
+		<field name="sef_advanced" type="hidden" default="1"/>
+		<field name="tours_limit" type="number"
+			   label="COM_JATOMS_PARAMS_TOURS_LIMIT"
+			   default="10"/>
+		<field name="showcases_limit" type="number"
+			   label="COM_JATOMS_PARAMS_SHOWCASES_LIMIT"
+			   default="10"/>
+		<field name="showcases_layout" type="componentlayout"
+			   label="COM_JATOMS_PARAMS_SHOWCASES_LAYOUT"
+			   extension="com_jatoms"
+			   view="showcases"/>
+		<field name="showcase_layout" type="componentlayout"
+			   label="COM_JATOMS_PARAMS_SHOWCASE_LAYOUT"
+			   extension="com_jatoms"
+			   view="showcase"/>
+		<field name="tour_layout" type="componentlayout"
+			   label="COM_JATOMS_PARAMS_TOUR_LAYOUT"
+			   extension="com_jatoms"
+			   view="tour"/>
+		<field name="social_share" type="editor"
+			   label="COM_JATOMS_PARAMS_SOCIAL_SHARE"
+			   filter="raw"
+			   editor="codemirror|none"
+			   height="250"
+			   syntax="html"
+			   buttons="false"/>
+		<field name="duplicates_protection" type="radio"
+			   label="COM_JATOMS_PARAMS_DUPLICATES_PROTECTION"
+			   default="1"
+			   class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+	</fieldset>
+	<fieldset name="cachetimeout" label="COM_JATOMS_PARAMS_CACHETIMEOUT"
+			  addfieldpath="/administrator/components/com_jatoms/models/fields">
+		<field name="showcase_data_cachetimeout" type="timeout"
+			   label="COM_JATOMS_PARAMS_SHOWCASE_DATA_CACHETIMEOUT"
+			   description="COM_JATOMS_PARAMS_SHOWCASE_DATA_CACHETIMEOUT_DESC"
+			   default="5 minutes"/>
+		<field name="tour_data_cachetimeout" type="timeout"
+			   label="COM_JATOMS_PARAMS_TOUR_DATA_CACHETIMEOUT"
+			   description="COM_JATOMS_PARAMS_TOUR_DATA_CACHETIMEOUT_DESC"
+			   default="5 minutes"/>
+		<field name="tour_route_cachetimeout" type="timeout"
+			   label="COM_JATOMS_PARAMS_TOUR_ROUTE_CACHETIMEOUT"
+			   description="COM_JATOMS_PARAMS_TOUR_ROUTE_CACHETIMEOUT_DESC"
+			   default="1 days"/>
+		<field name="tour_image_cachetimeout" type="timeout"
+			   label="COM_JATOMS_PARAMS_TOUR_IMAGE_CACHETIMEOUT"
+			   description="COM_JATOMS_PARAMS_TOUR_IMAGE_CACHETIMEOUT_DESC"
+			   default="1 hours"/>
+	</fieldset>
+	<fieldset name="permissions"
+			  label="JCONFIG_PERMISSIONS_LABEL"
+			  description="JCONFIG_PERMISSIONS_DESC">
+		<field name="rules" type="rules"
+			   label="JCONFIG_PERMISSIONS_LABEL"
+			   class="inputbox"
+			   validate="rules"
+			   filter="rules"
+			   component="com_jatoms"
+			   section="component"/>
+	</fieldset>
+</config>

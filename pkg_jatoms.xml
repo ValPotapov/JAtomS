@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.9" type="package" method="upgrade">
+	<name>PKG_JATOMS</name>
+	<packagename>jatoms</packagename>
+	<author>Septdir Workshop</author>
+	<creationDate>May 2019</creationDate>
+	<copyright>Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.</copyright>
+	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>development@septdir.com</authorEmail>
+	<authorUrl>https://www.septdir.com/</authorUrl>
+	<version>1.0.0</version>
+	<description>PKG_JATOMS_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.pkg_jatoms.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.pkg_jatoms.sys.ini</language>
+	</languages>
+	<files>
+		<folder type="component" id="com_jatoms">com_jatoms</folder>
+		<folder type="module" id="mod_jatoms_showcase" client="site">mod_jatoms_showcase</folder>
+		<folder type="module" id="mod_jatoms_showcases" client="site">mod_jatoms_showcases</folder>
+	</files>
+	<updateservers>
+		<server type="extension" priority="1" name="JAtomS">
+			https://www.septdir.com/marketplace/joomla/update?element=pkg_jatoms
+		</server>
+	</updateservers>
+</extension>
