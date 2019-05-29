@@ -46,6 +46,10 @@
 			   label="COM_JATOMS_PARAMS_TOUR_IMAGE_CACHETIMEOUT"
 			   description="COM_JATOMS_PARAMS_TOUR_IMAGE_CACHETIMEOUT_DESC"
 			   default="1 hours"/>
+		<field name="hotel_image_cachetimeout" type="timeout"
+			   label="COM_JATOMS_PARAMS_HOTEL_IMAGE_CACHETIMEOUT"
+			   description="COM_JATOMS_PARAMS_HOTEL_IMAGE_CACHETIMEOUT_DESC"
+			   default="1 hours"/>
 	</fieldset>
 	<fieldset name="seo" label="COM_JATOMS_PARAMS_SEO">
 		<field name="tour_meta_title" type="radio"

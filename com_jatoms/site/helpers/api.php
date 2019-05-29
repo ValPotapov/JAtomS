@@ -73,6 +73,15 @@ class JAtomSHelperApi
 	protected static $_tourImage = array();
 
 	/**
+	 * Hotel images.
+	 *
+	 * @var  array
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected static $_hotelImage = array();
+
+	/**
 	 * Method to get showcase data.
 	 *
 	 * @param   string   $showcase_key  Showcase Api key
@@ -224,7 +233,7 @@ class JAtomSHelperApi
 		// Clean src
 		$src  = preg_replace('/\?[0-9]*$/', '', $src);
 		$hash = md5($src);
-		if (!isset(self::$_tour[$hash]))
+		if (!isset(self::$_tourImage[$hash]))
 		{
 			$filename  = basename(urldecode($src));
 			$extension = File::getExt($filename);
@@ -240,10 +249,10 @@ class JAtomSHelperApi
 				}
 			}
 
-			self::$_tour[$hash] = $image;
+			self::$_tourImage[$hash] = $image;
 		}
 
-		return self::$_tour[$hash];
+		return self::$_tourImage[$hash];
 	}
 
 	/**
@@ -279,5 +288,46 @@ class JAtomSHelperApi
 		}
 
 		return self::$_tourOrderLink[$hash];
+	}
+
+	/**
+	 * Method to get hotel image.
+	 *
+	 * @param   integer  $pk   The id of the hotel.
+	 * @param   string   $src  Image src.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  string|false Tour image src on success, false on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function getHotelImage($pk = null, $src = null)
+	{
+		if (empty($pk) || empty($src)) return false;
+
+		// Clean src
+		$src  = preg_replace('/\?[0-9]*$/', '', $src);
+		$hash = md5($src);
+		if (!isset(self::$_hotelImage[$hash]))
+		{
+			$filename  = basename(urldecode($src));
+			$extension = File::getExt($filename);
+			$name      = md5(File::stripExt($filename));
+			$key       = $pk . '_' . $name;
+
+			// Get cache image
+			if (!$image = JAtomSHelperCache::getData('hotel_image', $key, $extension, true))
+			{
+				if ($context = @file_get_contents($src))
+				{
+					$image = JAtomSHelperCache::saveData('hotel_image', $key, $context, $extension);
+				}
+			}
+
+			self::$_hotelImage[$hash] = $image;
+		}
+
+		return self::$_hotelImage[$hash];
 	}
 }

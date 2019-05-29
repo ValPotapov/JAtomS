@@ -156,6 +156,38 @@ class JAtomSModelTour extends ItemModel
 				$data->showcase     = $showcase;
 				$data->showcase_key = $showcase->key;
 
+				// Set hotels images
+				if (!empty($data->nearest_trip->hotels)) {
+					foreach ($data->nearest_trip->hotels as &$hotel) {
+						$hotel->images = array();
+
+						$imageSizes = array('original', 'medium', 'small');
+						foreach ($hotel->gallery as $images)
+						{
+							$image = new stdClass();
+							foreach ($imageSizes as $size)
+							{
+								if (isset($images->$size))
+								{
+									$src          = JAtomSHelperApi::getHotelImage($hotel->id, $images->$size);
+									$image->$size = $src;
+
+									foreach ($imageSizes as $otherSize)
+									{
+										if (!isset($image->$otherSize))
+										{
+											$image->$otherSize = $src;
+										}
+									}
+								}
+							}
+							$hotel->images[] = $image;
+						}
+					}
+				}
+
+				echo '<pre>', print_r($data, true), '</pre>';
+
 				$this->_item[$pk] = $data;
 			}
 			catch (Exception $e)
