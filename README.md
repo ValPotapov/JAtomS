@@ -33,11 +33,11 @@ Getting a showcases, Getting a tour, Uploading images, etc.
 * **JAtomS - Showcases**  
 	Module for displaying showcases form component
 
-## Atom-C
+## Atom-S
 Atom-S is software for automating sales of excursion tours (for tour operators and travel agencies).  
 Website: [www.atom-s.com](https://atom-s.com)
 
-### Atom-C Features
+### Atom-S Features
 * The b2b system is strictly for tour organizers and sellers
 * Virtual Assistant to take orders from tourists
 * Personal account for the agency at the tour operator site
