@@ -186,8 +186,6 @@ class JAtomSModelTour extends ItemModel
 					}
 				}
 
-				echo '<pre>', print_r($data, true), '</pre>';
-
 				$this->_item[$pk] = $data;
 			}
 			catch (Exception $e)

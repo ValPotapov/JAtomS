@@ -221,10 +221,6 @@ class JAtomSViewTour extends HtmlView
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
-		elseif (!empty($tour->description))
-		{
-			$this->document->setDescription(JHtmlString::truncate($tour->description, 150, false, false));
-		}
 		elseif ($this->params->get('tour_meta_description', 1))
 		{
 			$price = ($tour->is_group_tour) ?
@@ -232,7 +228,11 @@ class JAtomSViewTour extends HtmlView
 				: Text::sprintf('COM_JATOMS_PRICE_FROM_PERSON_VALUE', $tour->nearest_trip->min_adult_main_price);
 
 			$this->document->setDescription(Text::sprintf('COM_JATOMS_META_TOUR_DESCRIPTION', $sitename,
-				strtolower($tour->type),$tour->name, $price));
+				mb_strtolower($tour->type),$tour->name, $price));
+		}
+		elseif (!empty($tour->description))
+		{
+			$this->document->setDescription(JHtmlString::truncate($tour->description, 150, false, false));
 		}
 
 		// Set meta keywords
