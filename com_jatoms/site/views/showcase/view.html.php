@@ -195,6 +195,7 @@ class JAtomSViewShowcase extends HtmlView
 		// Set meta title
 		$title    = (!$current && $showcase->id > 0) ? $showcase->title : $this->params->get('page_title');
 		$sitename = $app->get('sitename');
+		$page     = ((int) $this->state->get('list.start', 0) / (int) $this->state->get('list.limit', 10)) + 1;
 		if ($app->get('sitename_pagetitles', 0) == 1)
 		{
 			$title = Text::sprintf('JPAGETITLE', $sitename, $title);
@@ -203,14 +204,18 @@ class JAtomSViewShowcase extends HtmlView
 		{
 			$title = Text::sprintf('JPAGETITLE', $title, $sitename);
 		}
+		if ($page > 1)
+		{
+			$title = Text::sprintf('COM_JATOMS_META_PAGINATION_TITLE', $title, $page);
+		}
 		$this->document->setTitle($title);
 
 		// Set meta description
-		if ($current && $this->params->get('menu-meta_description'))
+		if ($current && $page <= 1 && $this->params->get('menu-meta_description'))
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
-		elseif (!empty($showcase->description))
+		elseif ($page <= 1 && !empty($showcase->description))
 		{
 			$this->document->setDescription(JHtmlString::truncate($showcase->description, 150, false, false));
 		}

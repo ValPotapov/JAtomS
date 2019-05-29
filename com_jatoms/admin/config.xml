@@ -27,13 +27,6 @@
 			   height="250"
 			   syntax="html"
 			   buttons="false"/>
-		<field name="duplicates_protection" type="radio"
-			   label="COM_JATOMS_PARAMS_DUPLICATES_PROTECTION"
-			   default="1"
-			   class="btn-group btn-group-yesno">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
 	</fieldset>
 	<fieldset name="cachetimeout" label="COM_JATOMS_PARAMS_CACHETIMEOUT"
 			  addfieldpath="/administrator/components/com_jatoms/models/fields">
@@ -53,6 +46,31 @@
 			   label="COM_JATOMS_PARAMS_TOUR_IMAGE_CACHETIMEOUT"
 			   description="COM_JATOMS_PARAMS_TOUR_IMAGE_CACHETIMEOUT_DESC"
 			   default="1 hours"/>
+	</fieldset>
+	<fieldset name="seo" label="COM_JATOMS_PARAMS_SEO">
+		<field name="tour_meta_title" type="radio"
+			   label="COM_JATOMS_PARAMS_TOUR_META_TITLE"
+			   description="COM_JATOMS_PARAMS_TOUR_META_TITLE_DESC"
+			   default="1"
+			   class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="tour_meta_description" type="radio"
+			   label="COM_JATOMS_PARAMS_TOUR_META_DESCRIPTION"
+			   description="COM_JATOMS_PARAMS_TOUR_META_DESCRIPTION_DESC"
+			   default="1"
+			   class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="duplicates_protection" type="radio"
+			   label="COM_JATOMS_PARAMS_DUPLICATES_PROTECTION"
+			   default="1"
+			   class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 	</fieldset>
 	<fieldset name="permissions"
 			  label="JCONFIG_PERMISSIONS_LABEL"

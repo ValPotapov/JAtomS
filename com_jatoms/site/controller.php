@@ -65,9 +65,16 @@ class JAtomSController extends BaseController
 
 			if ($link)
 			{
+				// Add start to canonical
 				$uri       = Uri::getInstance();
+				$canonical = Uri::getInstance(Route::_($link));
+				if (!empty($uri->getVar('start')))
+				{
+					$canonical->setVar('start', $uri->getVar('start'));
+				}
+
 				$root      = $uri->toString(array('scheme', 'host', 'port'));
-				$canonical = Uri::getInstance(Route::_($link))->toString();
+				$canonical = $canonical->toString();
 				$current   = $uri->toString(array('path', 'query', 'fragment'));
 
 				if ($current !== $canonical)
@@ -75,10 +82,6 @@ class JAtomSController extends BaseController
 					Factory::getDocument()->addCustomTag('<link href="' . $root . $canonical . '" rel="canonical"/>');
 
 					$redirect = Uri::getInstance(Route::_($link));
-					if (!empty($uri->getVar('start')))
-					{
-						$redirect->setVar('start', $uri->getVar('start'));
-					}
 					if (!empty($uri->getVar('debug')))
 					{
 						$redirect->setVar('debug', $uri->getVar('debug'));

@@ -194,6 +194,18 @@ class JAtomSViewTour extends HtmlView
 		// Set meta title
 		$title    = (!$current) ? $tour->name : $this->params->get('page_title');
 		$sitename = $app->get('sitename');
+		if ($this->params->get('tour_meta_title', 1))
+		{
+			$duration = ($tour->duration_hours) ?
+				Text::plural('COM_JATOMS_DURATION_N_HOURS', $tour->duration_hours)
+				: Text::plural('COM_JATOMS_DURATION_N_DAYS', $tour->duration_days);
+			$price    = ($tour->is_group_tour) ?
+				Text::sprintf('COM_JATOMS_PRICE_FROM_VALUE', $tour->nearest_trip->prices[0]->price)
+				: Text::sprintf('COM_JATOMS_PRICE_FROM_PERSON_VALUE', $tour->nearest_trip->min_adult_main_price);
+
+			$title = Text::sprintf('COM_JATOMS_META_TOUR_TITLE', ucfirst($tour->type), $tour->name, $duration, $price);
+		}
+
 		if ($app->get('sitename_pagetitles', 0) == 1)
 		{
 			$title = Text::sprintf('JPAGETITLE', $sitename, $title);
@@ -212,6 +224,15 @@ class JAtomSViewTour extends HtmlView
 		elseif (!empty($tour->description))
 		{
 			$this->document->setDescription(JHtmlString::truncate($tour->description, 150, false, false));
+		}
+		elseif ($this->params->get('tour_meta_description', 1))
+		{
+			$price = ($tour->is_group_tour) ?
+				Text::sprintf('COM_JATOMS_PRICE_FROM_VALUE', $tour->nearest_trip->prices[0]->price)
+				: Text::sprintf('COM_JATOMS_PRICE_FROM_PERSON_VALUE', $tour->nearest_trip->min_adult_main_price);
+
+			$this->document->setDescription(Text::sprintf('COM_JATOMS_META_TOUR_DESCRIPTION', $sitename,
+				strtolower($tour->type),$tour->name, $price));
 		}
 
 		// Set meta keywords

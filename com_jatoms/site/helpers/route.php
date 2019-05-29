@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\RouteHelper;
 
 class JAtomSHelperRoute extends RouteHelper
@@ -52,6 +53,8 @@ class JAtomSHelperRoute extends RouteHelper
 	 * @param   int  $id           The id of the tour.
 	 * @param   int  $showcase_id  The id of the showcase.
 	 *
+	 * @throws  Exception
+	 *
 	 * @return  string  Tour view link.
 	 *
 	 * @since  1.0.0
@@ -66,6 +69,10 @@ class JAtomSHelperRoute extends RouteHelper
 		if (!empty($showcase_id))
 		{
 			$link .= '&showcase_id=' . $showcase_id;
+		}
+		if (Factory::getApplication()->input->get('option') != 'com_jatoms')
+		{
+			$link .= '&root=1';
 		}
 
 		return $link;
