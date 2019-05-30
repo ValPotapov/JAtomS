@@ -157,8 +157,10 @@ class JAtomSModelTour extends ItemModel
 				$data->showcase_key = $showcase->key;
 
 				// Set hotels images
-				if (!empty($data->nearest_trip->hotels)) {
-					foreach ($data->nearest_trip->hotels as &$hotel) {
+				if (!empty($data->nearest_trip->hotels))
+				{
+					foreach ($data->nearest_trip->hotels as &$hotel)
+					{
 						$hotel->images = array();
 
 						$imageSizes = array('original', 'medium', 'small');
@@ -183,7 +185,10 @@ class JAtomSModelTour extends ItemModel
 							}
 							$hotel->images[] = $image;
 						}
+
+						$hotel->image = (!empty($hotel->images)) ? $hotel->images[0] : false;
 					}
+
 				}
 
 				$this->_item[$pk] = $data;
