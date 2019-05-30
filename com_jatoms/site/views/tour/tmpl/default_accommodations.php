@@ -38,14 +38,13 @@ use Joomla\Utilities\ArrayHelper;
 						</div>
 					</div>
 				</div>
-				<?php $description = (!empty(trim($hotel->description))) ? $hotel->description
-					: $hotel->city->name . ' ' . $hotel->address;
-				if ($description): ?>
-					<p>
-						<strong><?php echo Text::_('JGLOBAL_DESCRIPTION'); ?></strong><br>
-						<?php echo nl2br($description); ?>
-					</p>
-				<?php endif; ?>
+				<p>
+					<strong><?php echo Text::_('JGLOBAL_DESCRIPTION'); ?></strong><br>
+					<?php if (!empty(trim(strip_tags($hotel->description)))):?>
+						<?php echo nl2br(strip_tags($hotel->description)); ?><br>
+					<?php endif; ?>
+					<?php echo $hotel->city->name . ' ' . $hotel->address; ?>
+				</p>
 				<?php if ($hotel->accommodations): ?>
 					<p>
 						<strong><?php echo Text::_('COM_JATOMS_TOUR_AVAILABLE_ROOMS'); ?></strong><br>
