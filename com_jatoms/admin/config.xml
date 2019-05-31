@@ -51,7 +51,13 @@
 			   description="COM_JATOMS_PARAMS_HOTEL_IMAGE_CACHETIMEOUT_DESC"
 			   default="1 hours"/>
 	</fieldset>
-	<fieldset name="seo" label="COM_JATOMS_PARAMS_SEO">
+	<fieldset name="seo" label="COM_JATOMS_PARAMS_SEO"
+			  addfieldpath="/administrator/components/com_jatoms/models/fields">
+		<field name="main_showcase" type="showcases"
+			   label="COM_JATOMS_PARAMS_MAIN_SHOWCASE"
+			   description="COM_JATOMS_PARAMS_MAIN_SHOWCASE">
+			<option>COM_JATOMS_SHOWCASE_SELECT</option>
+		</field>
 		<field name="tour_meta_title" type="radio"
 			   label="COM_JATOMS_PARAMS_TOUR_META_TITLE"
 			   description="COM_JATOMS_PARAMS_TOUR_META_TITLE_DESC"
