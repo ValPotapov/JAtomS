@@ -116,7 +116,6 @@ class JAtomSRouter extends RouterView
 			$hash = md5('showcase_' . $id);
 			if (!isset($this->_segments[$hash]))
 			{
-
 				$db      = Factory::getDbo();
 				$dbquery = $db->getQuery(true)
 					->select(array('alias', $db->quoteName('key')))
