@@ -143,6 +143,9 @@ class JAtomSModelTour extends ItemModel
 				}
 				$data->image = (!empty($data->images)) ? $data->images[0] : false;
 
+				// Set tour type
+				$data->type = Text::_('COM_JATOMS_TOUR_TYPE_SIGHTSEEING');
+
 				// Set link
 				$data->alias = $data->slug;
 				$data->jslug = $data->id . ':' . $data->alias;

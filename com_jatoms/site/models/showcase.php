@@ -14,6 +14,7 @@ JLoader::register('JAtomSHelperCache', JPATH_SITE . '/components/com_jatoms/help
 JLoader::register('JAtomSHelperApi', JPATH_SITE . '/components/com_jatoms/helpers/api.php');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
@@ -260,6 +261,9 @@ class JAtomSModelShowcase extends ListModel
 				$item->jslug = $item->tour->id . ':' . $item->alias;
 				$item->link  = Route::_(JAtomSHelperRoute::getTourRoute($item->jslug, $showcase->slug));
 				$item->order = JAtomSHelperApi::getTourOrderLink($item->tour->id, $showcase->key);
+
+				// Set tour type
+				$item->tour->type = Text::_('COM_JATOMS_TOUR_TYPE_SIGHTSEEING');
 
 				// Set showcase data
 				$item->showcase_id    = $showcase->id;
