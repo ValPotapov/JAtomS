@@ -16,7 +16,12 @@ use Joomla\CMS\Language\Text;
 HTMLHelper::stylesheet('media/com_jatoms/css/site.min.css', array('version' => 'auto'));
 ?>
 <div id="JAtomS" class="showcases">
-	<h1><?php echo Text::_('COM_JATOMS_SHOWCASES'); ?></h1>
+	<div class="page-header">
+		<h1>
+			<?php echo ($this->params->get('show_page_heading') && $this->params->get('page_heading'))
+				? $this->params->get('page_heading') : Text::_('COM_JATOMS_SHOWCASES'); ?>
+		</h1>
+	</div>
 	<?php if (empty($this->items)) : ?>
 		<div class="alert alert-no-items">
 			<?php echo Text::_('COM_JATOMS_ERROR_SHOWCASES_NOT_FOUND'); ?>

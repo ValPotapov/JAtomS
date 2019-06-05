@@ -10,7 +10,6 @@
 
 defined('_JEXEC') or die;
 
-
 use Joomla\CMS\MVC\Model\ListModel;
 
 class JAtomSModelShowcases extends ListModel

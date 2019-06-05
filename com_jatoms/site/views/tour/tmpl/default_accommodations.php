@@ -55,7 +55,7 @@ use Joomla\Utilities\ArrayHelper;
 			<div class="span4">
 				<?php if ($hotel->image): ?>
 					<p>
-						<a href="<?php echo $image->original; ?>" target="_blank">
+						<a href="<?php echo $hotel->image->original; ?>" target="_blank">
 							<?php echo HTMLHelper::image($hotel->image->medium, htmlspecialchars($hotel->name)); ?>
 						</a>
 					</p>
