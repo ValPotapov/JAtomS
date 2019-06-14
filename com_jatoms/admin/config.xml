@@ -20,6 +20,10 @@
 			   label="COM_JATOMS_PARAMS_TOUR_LAYOUT"
 			   extension="com_jatoms"
 			   view="tour"/>
+		<field name="booking_layout" type="componentlayout"
+			   label="COM_JATOMS_PARAMS_BOOKING_LAYOUT"
+			   extension="com_jatoms"
+			   view="booking"/>
 		<field name="social_share" type="editor"
 			   label="COM_JATOMS_PARAMS_SOCIAL_SHARE"
 			   filter="raw"
@@ -46,6 +50,10 @@
 			   label="COM_JATOMS_PARAMS_TOUR_IMAGE_CACHETIMEOUT"
 			   description="COM_JATOMS_PARAMS_TOUR_IMAGE_CACHETIMEOUT_DESC"
 			   default="1 hours"/>
+		<field name="tour_booking_cachetimeout" type="timeout"
+			   label="COM_JATOMS_PARAMS_TOUR_BOOKING_CACHETIMEOUT"
+			   description="COM_JATOMS_PARAMS_TOUR_BOOKING_CACHETIMEOUT_DESC"
+			   default="5 minutes"/>
 		<field name="hotel_image_cachetimeout" type="timeout"
 			   label="COM_JATOMS_PARAMS_HOTEL_IMAGE_CACHETIMEOUT"
 			   description="COM_JATOMS_PARAMS_HOTEL_IMAGE_CACHETIMEOUT_DESC"

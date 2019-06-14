@@ -55,13 +55,13 @@ class JAtomSHelperApi
 	protected static $_tour = array();
 
 	/**
-	 * Tour order links.
+	 * Tour booking data.
 	 *
 	 * @var  array
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
-	protected static $_tourOrderLink = array();
+	protected static $_tourBooking = array();
 
 	/**
 	 * Tour images.
@@ -256,38 +256,65 @@ class JAtomSHelperApi
 	}
 
 	/**
-	 * Method to get tour order link.
+	 * Method to get tour booking.
 	 *
-	 * @param   integer  $pk            The id of the tour.
+	 * @param   integer  $tour_id       The id of the tour.
 	 * @param   string   $showcase_key  Showcase Api key.
+	 * @param   integer  $trip          The id of the schedule.
 	 *
 	 * @throws  Exception
 	 *
-	 * @return  string|false Tour order link on success, false on failure.
+	 * @return  Registry|false Booking data as Registry object on success, false on failure.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
-	public static function getTourOrderLink($pk = null, $showcase_key = null)
+	public static function getTourBooking($tour_id = null, $showcase_key = null, $trip = null)
 	{
 		if (empty($showcase_key))
 		{
 			throw new Exception(Text::sprintf('COM_JATOMS_ERROR_API',
 				Text::_('COM_JATOMS_ERROR_API_SHOWCASE_KEY')));
 		}
-		if (empty($pk))
+		if (empty($tour_id))
 		{
 			throw new Exception(Text::sprintf('COM_JATOMS_ERROR_API',
 				Text::_('COM_JATOMS_ERROR_API_EMPTY_TOUR_ID')));
 		}
 
-		$hash = md5($pk);
-		if (!isset(self::$_tourOrderLink[$hash]))
+		$key  = $tour_id . '_' . $trip;
+		$hash = md5($key);
+		if (!isset(self::$_tourBooking[$hash]))
 		{
-			self::$_tourOrderLink[$hash] = 'https://' . self::$host . '/api/' . self::$version . '/' . $showcase_key . '/search/tour/'
-				. $pk . '/package_constructor';
+			if (!$context = JAtomSHelperCache::getData('tour_booking', $key))
+			{
+				$link = 'https://' . self::$host . '/api/' . self::$version . '/' . $showcase_key . '/search/tour/'
+					. $tour_id . '/package_constructor';
+				if (!empty($trip))
+				{
+					$link .= '?trip=' . $trip;
+				}
+
+				$headers = @get_headers($link);
+				$context = array(
+					'tour_id'      => $tour_id,
+					'showcase_key' => $showcase_key,
+					'trip'         => $trip,
+					'iframe'       => $link,
+					'status'       => (empty($headers) || $headers[0] !== 'HTTP/1.1 200 OK') ? 'error' : 'success'
+				);
+				JAtomSHelperCache::saveData('tour_booking', $tour_id . $key, $context);
+
+				self::$_tourBooking[$hash] = new Registry($context);
+			}
+			else
+			{
+				$registry = new Registry($context);
+
+				self::$_tourBooking[$hash] = $registry;
+			}
 		}
 
-		return self::$_tourOrderLink[$hash];
+		return self::$_tourBooking[$hash];
 	}
 
 	/**

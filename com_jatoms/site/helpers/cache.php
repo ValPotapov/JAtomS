@@ -47,6 +47,7 @@ class JAtomSHelperCache
 		'tour_data'     => array('count' => 5, 'type' => 'minutes'),
 		'tour_route'    => array('count' => 1, 'type' => 'days'),
 		'tour_image'    => array('count' => 1, 'type' => 'hours'),
+		'tour_booking'  => array('count' => 5, 'type' => 'minutes'),
 		'hotel_image'   => array('count' => 1, 'type' => 'hours'),
 	);
 
@@ -62,6 +63,7 @@ class JAtomSHelperCache
 		'tour_data'     => JPATH_CACHE . '/jatoms_tour_data',
 		'tour_route'    => JPATH_CACHE . '/jatoms_tour_route',
 		'tour_image'    => JPATH_CACHE . '/jatoms_tour_image',
+		'tour_booking'  => JPATH_CACHE . '/jatoms_tour_booking',
 		'hotel_image'   => JPATH_CACHE . '/jatoms_hotel_image',
 	);
 

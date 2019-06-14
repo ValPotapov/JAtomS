@@ -77,6 +77,11 @@ class JAtomSRouter extends RouterView
 		$tour->setKey('id')->setParent($showcase, 'showcase_id');
 		$this->registerView($tour);
 
+		// Booking route
+		$booking = new RouterViewConfiguration('booking');
+		$booking->setKey('key')->setParent($tour, 'tour_id');
+		$this->registerView($booking);
+
 		parent::__construct($app, $menu);
 
 		$this->attachRule(new MenuRules($this));
@@ -216,6 +221,21 @@ class JAtomSRouter extends RouterView
 	}
 
 	/**
+	 * Method to get the segment(s) for booking.
+	 *
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
+	 *
+	 * @return  array|string  The segments of this item.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getBookingSegment($id, $query)
+	{
+		return array(1 => 'booking');
+	}
+
+	/**
 	 * Method to get the id for showcases.
 	 *
 	 * @param   string  $segment  Segment to retrieve the ID.
@@ -344,6 +364,21 @@ class JAtomSRouter extends RouterView
 		}
 
 		return false;
+	}
+
+	/**
+	 * Method to get the id for booking.
+	 *
+	 * @param   string  $segment  Segment to retrieve the ID.
+	 * @param   array   $query    The request that is parsed right now.
+	 *
+	 * @return  integer|false  The id of this item or false.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getBookingId($segment, $query)
+	{
+		return (@$query['view'] == 'booking' || $segment == 'booking') ? 1 : false;
 	}
 }
 

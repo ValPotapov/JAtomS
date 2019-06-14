@@ -17,13 +17,13 @@ use Joomla\CMS\Helper\RouteHelper;
 class JAtomSHelperRoute extends RouteHelper
 {
 	/**
-	 * Tours links.
+	 * Showcase menu items.
 	 *
 	 * @var  array
 	 *
 	 * @since  __DEPLOY_VERSION__
 	 */
-	protected static $_tourLinks = array();
+	protected static $_showcaseItemid = array();
 
 	/**
 	 * Fetches showcases route.
@@ -71,37 +71,99 @@ class JAtomSHelperRoute extends RouteHelper
 	 */
 	public static function getTourRoute($id = null, $showcase_id = null)
 	{
-		$hash = md5($id . '_' . $showcase_id);
-		if (!isset(self::$_tourLinks[$hash]))
+		$link = 'index.php?option=com_jatoms&view=tour';
+
+		if (!empty($id))
 		{
-			$component = ComponentHelper::getComponent('com_jatoms');
-			$link      = 'index.php?option=com_jatoms&view=tour';
+			$link .= '&id=' . $id;
+		}
 
-			if (!empty($id))
-			{
-				$link .= '&id=' . $id;
-			}
+		// Set main showcase
+		if ($main_showcase = ComponentHelper::getParams('com_jatoms')->get('main_showcase'))
+		{
+			$showcase_id = $main_showcase;
+		}
 
-			// Set main showcase
-			if ($main_showcase = $component->getParams()->get('main_showcase'))
-			{
-				$showcase_id = $main_showcase;
-			}
+		if (!empty($showcase_id))
+		{
+			$link .= '&showcase_id=' . $showcase_id;
+		}
 
-			if (!empty($showcase_id))
-			{
-				$link .= '&showcase_id=' . $showcase_id;
-			}
+		// Check menu items
+		$link .= ($Itemid = self::getShowcaseItemid($showcase_id)) ? '&Itemid=' . $Itemid : '&root=1';
 
-			// Check menu items
+		return $link;
+	}
+
+	/**
+	 * Fetches booking route.
+	 *
+	 * @param   int  $tour_id      The id of the tour.
+	 * @param   int  $showcase_id  The id of the showcase.
+	 * @param   int  $trip         The id of the schedule.
+	 *
+	 * @throws Exception
+	 * @return  string  Booking view link.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function getBookingRoute($tour_id = null, $showcase_id = null, $trip = null)
+	{
+		$link = 'index.php?option=com_jatoms&view=booking&key=1';
+
+		if (!empty($tour_id))
+		{
+			$link .= '&tour_id=' . $tour_id;
+		}
+
+		// Set main showcase
+		if ($main_showcase = ComponentHelper::getParams('com_jatoms')->get('main_showcase'))
+		{
+			$showcase_id = $main_showcase;
+		}
+
+		if (!empty($showcase_id))
+		{
+			$link .= '&showcase_id=' . $showcase_id;
+		}
+
+		if (!empty($trip))
+		{
+			$link .= '&trip=' . $trip;
+		}
+
+		$link .= ($Itemid = self::getShowcaseItemid($showcase_id)) ? '&Itemid=' . $Itemid : '&root=1';
+
+		return $link;
+	}
+
+	/**
+	 * Method to get showcase menu item id.
+	 *
+	 * @param   int  $showcase_id  The id of the showcase.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  string  Tour view link.
+	 *
+	 * @since  1.0.0
+	 */
+	protected static function getShowcaseItemid($showcase_id = null)
+	{
+		$showcase_id = (strpos($showcase_id, ':')) ? explode(':', $showcase_id, 2)[0] : $showcase_id;
+		if (empty($showcase_id))
+		{
+			return false;
+		}
+		if (!isset(self::$_showcaseItemid[$showcase_id]))
+		{
 			$menu   = Factory::getApplication()->getMenu('site');
-			$Itemid = '';
-			if ($items = $menu->getItems('component_id', $component->id))
+			$Itemid = false;
+			if ($items = $menu->getItems('component_id', ComponentHelper::getComponent('com_jatoms')->id))
 			{
-				$sid = (strpos($showcase_id, ':')) ? explode(':', $showcase_id, 2)[0] : $showcase_id;
 				foreach ($items as $item)
 				{
-					if (@$item->query['view'] == 'showcase' && @$item->query['id'] == $sid)
+					if (@$item->query['view'] == 'showcase' && @$item->query['id'] == $showcase_id)
 					{
 						$Itemid = $item->id;
 
@@ -109,11 +171,9 @@ class JAtomSHelperRoute extends RouteHelper
 					}
 				}
 			}
-			$link .= ($Itemid) ? '&Itemid=' . $Itemid : '&root=1';
-
-			self::$_tourLinks[$hash] = $link;
+			self::$_showcaseItemid[$showcase_id] = $Itemid;
 		}
 
-		return self::$_tourLinks[$hash];
+		return self::$_showcaseItemid[$showcase_id];
 	}
 }

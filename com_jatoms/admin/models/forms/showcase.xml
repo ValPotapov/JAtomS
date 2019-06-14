@@ -56,6 +56,10 @@
 				   useglobal="true"
 				   extension="com_jatoms"
 				   view="tour"/>
+			<field name="booking_layout" type="componentlayout"
+				   label="COM_JATOMS_PARAMS_BOOKING_LAYOUT"
+				   extension="com_jatoms"
+				   view="booking"/>
 		</fields>
 		<field name="ordering" type="hidden" filter="unset"/>
 	</fieldset>

@@ -28,6 +28,11 @@
 				   useglobal="true"
 				   extension="com_jatoms"
 				   view="tour"/>
+			<field name="booking_layout" type="componentlayout"
+				   label="COM_JATOMS_PARAMS_BOOKING_LAYOUT"
+				   useglobal="true"
+				   extension="com_jatoms"
+				   view="booking"/>
 		</fieldset>
 	</fields>
 </metadata>

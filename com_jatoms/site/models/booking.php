@@ -20,23 +20,32 @@ use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
-class JAtomSModelTour extends ItemModel
+class JAtomSModelBooking extends ItemModel
 {
 	/**
 	 * Model context string.
 	 *
 	 * @var  string
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
-	protected $_context = 'jatoms.tour';
+	protected $_context = 'jatoms.booking';
+
+	/**
+	 * Tour object.
+	 *
+	 * @var  object
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $_tour = null;
 
 	/**
 	 * Showcase object.
 	 *
 	 * @var  object
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected $_showcase = null;
 
@@ -45,15 +54,16 @@ class JAtomSModelTour extends ItemModel
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected function populateState()
 	{
 		$app = Factory::getApplication('site');
 
 		// Set request states
-		$this->setState('tour.id', $app->input->getInt('id', 0));
+		$this->setState('tour.id', $app->input->getInt('tour_id', 0));
 		$this->setState('showcase.id', $app->input->getInt('showcase_id', 0));
+		$this->setState('trip', $app->input->getInt('trip', 0));
 
 		// Merge global and menu item params into new object
 		$params     = $app->getParams();
@@ -82,19 +92,19 @@ class JAtomSModelTour extends ItemModel
 	}
 
 	/**
-	 * Method to get tour data.
+	 * Method to get booking data.
 	 *
-	 * @param   integer  $pk  The id of the tour.
+	 * @param   integer  $pk  The id of the schedule.
 	 *
 	 * @throws  Exception
 	 *
-	 * @return  object|boolean|Exception  Tour object on success, false or exception on failure.
+	 * @return  object|boolean|Exception  Booking object on success, false or exception on failure.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function getItem($pk = null)
 	{
-		$pk = (!empty($pk)) ? $pk : (int) $this->getState('tour.id');
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('trip');
 
 		if ($this->_item === null)
 		{
@@ -105,102 +115,29 @@ class JAtomSModelTour extends ItemModel
 		{
 			try
 			{
+				$tour     = $this->getTour();
 				$showcase = $this->getShowcase();
-				$api      = JAtomSHelperApi::getTourData($pk, $showcase->key);
-				$data     = $api->get('tour');
+				$api      = JAtomSHelperApi::getTourBooking($tour->id, $showcase->key, $pk);
+				$data     = ($api->get('status', 'error') !== 'error') ? $api->toObject() : false;
 
 				if (empty($data))
 				{
-					throw new Exception(Text::_('COM_JATOMS_ERROR_TOUR_NOT_FOUND'), 404);
+					throw new Exception(Text::_('COM_JATOMS_ERROR_BOOKING_NOT_FOUND'), 404);
 				}
-
-				// Set images
-				$data->images = array();
-				if (!empty($data->gallery))
-				{
-					$imageSizes = array('original', 'medium', 'small');
-					foreach ($data->gallery as $images)
-					{
-						$image = new stdClass();
-						foreach ($imageSizes as $size)
-						{
-							if (isset($images->$size))
-							{
-								$src          = JAtomSHelperApi::getTourImage($data->id, $images->$size);
-								$image->$size = $src;
-
-								foreach ($imageSizes as $otherSize)
-								{
-									if (!isset($image->$otherSize))
-									{
-										$image->$otherSize = $src;
-									}
-								}
-							}
-						}
-						$data->images[] = $image;
-					}
-				}
-				$data->image = (!empty($data->images)) ? $data->images[0] : false;
-
-				// Set tour type
-				$data->type = Text::_('COM_JATOMS_TOUR_TYPE_SIGHTSEEING');
 
 				// Set link
-				$data->alias = $data->slug;
-				$data->jslug = $data->id . ':' . $data->alias;
-				$data->link  = Route::_(JAtomSHelperRoute::getTourRoute($data->jslug, $showcase->slug));
-				$data->order = Route::_(JAtomSHelperRoute::getBookingRoute($data->jslug, $showcase->slug));
+				$data->link  = Route::_(JAtomSHelperRoute::getBookingRoute($tour->jslug, $showcase->slug, $pk));
+				$data->title = Text::sprintf('COM_JATOMS_BOOKING_TITLE', $tour->name);
 
-				if (!$data->is_cyclic_tour && !$data->is_group_tour)
-				{
-					foreach ($data->schedule as &$schedule)
-					{
-						$schedule->order = Route::_(JAtomSHelperRoute::getBookingRoute($data->id, $showcase->id, $schedule->id));
-					}
-				}
+				// Set tour
+				$data->tour = $tour;
 
 				// Set params
-				$data->params = $showcase->params;
+				$data->params = $tour->params;
 
 				// Set showcase
 				$data->showcase     = $showcase;
 				$data->showcase_key = $showcase->key;
-
-				// Set hotels images
-				if (!empty($data->nearest_trip->hotels))
-				{
-					foreach ($data->nearest_trip->hotels as &$hotel)
-					{
-						$hotel->images = array();
-
-						$imageSizes = array('original', 'medium', 'small');
-						foreach ($hotel->gallery as $images)
-						{
-							$image = new stdClass();
-							foreach ($imageSizes as $size)
-							{
-								if (isset($images->$size))
-								{
-									$src          = JAtomSHelperApi::getHotelImage($hotel->id, $images->$size);
-									$image->$size = $src;
-
-									foreach ($imageSizes as $otherSize)
-									{
-										if (!isset($image->$otherSize))
-										{
-											$image->$otherSize = $src;
-										}
-									}
-								}
-							}
-							$hotel->images[] = $image;
-						}
-
-						$hotel->image = (!empty($hotel->images)) ? $hotel->images[0] : false;
-					}
-
-				}
 
 				$this->_item[$pk] = $data;
 			}
@@ -222,6 +159,71 @@ class JAtomSModelTour extends ItemModel
 	}
 
 	/**
+	 * Method to get tour data.
+	 *
+	 * @param   integer  $pk  The id of the tour.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  object|boolean|Exception  Tour object on success, false or exception on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getTour($pk = null)
+	{
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('tour.id');
+
+		if ($this->_tour === null)
+		{
+			$this->_tour = array();
+		}
+
+		if (!isset($this->_tour[$pk]))
+		{
+			try
+			{
+				$showcase = $this->getShowcase();
+				$api      = JAtomSHelperApi::getTourData($pk, $showcase->key);
+				$data     = $api->get('tour');
+
+				if (empty($data))
+				{
+					throw new Exception(Text::_('COM_JATOMS_ERROR_TOUR_NOT_FOUND'), 404);
+				}
+
+
+				// Set link
+				$data->alias = $data->slug;
+				$data->jslug = $data->id . ':' . $data->alias;
+				$data->link  = Route::_(JAtomSHelperRoute::getTourRoute($data->jslug, $showcase->slug));
+
+				// Set params
+				$data->params = $showcase->params;
+
+				// Set showcase
+				$data->showcase     = $showcase;
+				$data->showcase_key = $showcase->key;
+
+				$this->_tour[$pk] = $data;
+			}
+			catch (Exception $e)
+			{
+				if ($e->getCode() == 404)
+				{
+					throw new Exception(Text::_($e->getMessage()), 404);
+				}
+				else
+				{
+					$this->setError($e);
+					$this->_tour[$pk] = false;
+				}
+			}
+		}
+
+		return $this->_tour[$pk];
+	}
+
+	/**
 	 * Method to get showcase data.
 	 *
 	 * @param   integer  $pk  The id of the showcase.
@@ -230,7 +232,7 @@ class JAtomSModelTour extends ItemModel
 	 *
 	 * @return  object|boolean|Exception  Showcase object on success, false or exception on failure.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function getShowcase($pk = null)
 	{
