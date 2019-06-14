@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 JLoader::register('JAtomSHelperCache', JPATH_SITE . '/components/com_jatoms/helpers/cache.php');
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
@@ -35,6 +36,15 @@ class JAtomSHelperApi
 	 * @since  1.0.0
 	 */
 	protected static $version = 'v2';
+
+	/**
+	 * Atom-S api locale.
+	 *
+	 * @var  string
+	 *
+	 * @since  1.0.0
+	 */
+	protected static $locale = null;
 
 	/**
 	 * Showcase data.
@@ -102,8 +112,9 @@ class JAtomSHelperApi
 				Text::_('COM_JATOMS_ERROR_API_SHOWCASE_KEY')));
 		}
 
-		$key  = $showcase_key . '_' . $limitstart . '_' . $limit;
-		$hash = md5($key);
+		$locale = self::getLocale();
+		$key    = $showcase_key . '_' . $limitstart . '_' . $limit . '_' . $locale;
+		$hash   = md5($key);
 		if (!isset(self::$_showcase[$hash]))
 		{
 			if (!$context = JAtomSHelperCache::getData('showcase_data', $key))
@@ -112,6 +123,7 @@ class JAtomSHelperApi
 				$url = 'https://' . self::$host . '/api/' . self::$version . '/' . $showcase_key . '/search.json';
 
 				$query             = array();
+				$query['locale']   = $locale;
 				$query['per_page'] = ($limit >= 0) ? $limit : 1;
 				$query['page']     = 1;
 				if (!empty($limitstart) && !empty($limit))
@@ -163,14 +175,21 @@ class JAtomSHelperApi
 				Text::_('COM_JATOMS_ERROR_API_EMPTY_TOUR_ID')));
 		}
 
-		$hash = md5($pk);
+		$locale = self::getLocale();
+		$key    = $pk . '_' . $locale;
+		$hash   = md5($key);
 		if (!isset(self::$_tour[$hash]))
 		{
-			if (!$context = JAtomSHelperCache::getData('tour_data', $pk))
+			if (!$context = JAtomSHelperCache::getData('tour_data', $key))
 			{
 				// Prepare url
 				$url = 'https://' . self::$host . '/api/' . self::$version . '/' . $showcase_key . '/search/tour/'
 					. $pk . '.json';
+
+				$query           = array();
+				$query['locale'] = $locale;
+
+				$url .= '?' . http_build_query($query);
 
 				// Try download
 				if (!$context = @file_get_contents($url))
@@ -189,14 +208,14 @@ class JAtomSHelperApi
 					'alias'        => $alias,
 					'showcase_key' => $showcase_key,
 				);
-				JAtomSHelperCache::saveData('tour_data', $id, $context);
-				JAtomSHelperCache::saveData('tour_data', $alias, $context);
+				JAtomSHelperCache::saveData('tour_data', $id . '_' . $locale, $context);
+				JAtomSHelperCache::saveData('tour_data', $alias . '_' . $locale, $context);
 				JAtomSHelperCache::saveData('tour_route', $id, $routeCache);
 				JAtomSHelperCache::saveData('tour_route', $alias, $routeCache);
 
 				// Set value
-				self::$_tour[md5($id)]    = $registry;
-				self::$_tour[md5($alias)] = $registry;
+				self::$_tour[md5($id . '_' . $locale)]    = $registry;
+				self::$_tour[md5($alias. '_' . $locale)] = $registry;
 			}
 			else
 			{
@@ -206,8 +225,8 @@ class JAtomSHelperApi
 				$alias    = $tour->slug;
 
 				// Set value
-				self::$_tour[md5($id)]    = $registry;
-				self::$_tour[md5($alias)] = $registry;
+				self::$_tour[md5($id. '_' . $locale)]    = $registry;
+				self::$_tour[md5($alias. '_' . $locale)] = $registry;
 			}
 		}
 
@@ -281,28 +300,34 @@ class JAtomSHelperApi
 				Text::_('COM_JATOMS_ERROR_API_EMPTY_TOUR_ID')));
 		}
 
-		$key  = $tour_id . '_' . $trip;
-		$hash = md5($key);
+		$locale = self::getLocale();
+		$key    = $tour_id . '_' . $trip . '_' . $locale;
+		$hash   = md5($key);
 		if (!isset(self::$_tourBooking[$hash]))
 		{
 			if (!$context = JAtomSHelperCache::getData('tour_booking', $key))
 			{
-				$link = 'https://' . self::$host . '/api/' . self::$version . '/' . $showcase_key . '/search/tour/'
+				$url = 'https://' . self::$host . '/api/' . self::$version . '/' . $showcase_key . '/search/tour/'
 					. $tour_id . '/package_constructor';
+
+				$query           = array();
+				$query['locale'] = $locale;
 				if (!empty($trip))
 				{
-					$link .= '?trip=' . $trip;
+					$query['trip'] = $trip;
 				}
 
-				$headers = @get_headers($link);
+				$url .= '?' . http_build_query($query);
+
+				$headers = @get_headers($url);
 				$context = array(
 					'tour_id'      => $tour_id,
 					'showcase_key' => $showcase_key,
 					'trip'         => $trip,
-					'iframe'       => $link,
+					'iframe'       => $url,
 					'status'       => (empty($headers) || $headers[0] !== 'HTTP/1.1 200 OK') ? 'error' : 'success'
 				);
-				JAtomSHelperCache::saveData('tour_booking', $tour_id . $key, $context);
+				JAtomSHelperCache::saveData('tour_booking', $key, $context);
 
 				self::$_tourBooking[$hash] = new Registry($context);
 			}
@@ -356,5 +381,21 @@ class JAtomSHelperApi
 		}
 
 		return self::$_hotelImage[$hash];
+	}
+
+	protected static function getLocale()
+	{
+		if (self::$locale === null)
+		{
+			$locale = explode('-', Factory::getLanguage()->getTag(), 2)[0];
+			if ($locale !== 'ru')
+			{
+				$locale = 'en';
+			}
+
+			self::$locale = $locale;
+		}
+
+		return self::$locale;
 	}
 }
