@@ -30,7 +30,7 @@ use Joomla\CMS\Language\Text;
 				<?php echo Text::_('COM_JATOMS_TOUR_AVAILABILITY_CHECK'); ?>
 			</a>
 		<?php else: ?>
-			<a href="<?php echo $this->tour->order; ?>" class="btn btn-primary span12" target="_blank">
+			<a href="<?php echo $this->tour->order; ?>" class="btn btn-primary span12" rel="nofollow" >
 				<?php echo Text::_('COM_JATOMS_BUY'); ?>
 			</a>
 		<?php endif; ?>
