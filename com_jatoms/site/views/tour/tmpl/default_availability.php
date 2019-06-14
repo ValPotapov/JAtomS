@@ -115,7 +115,7 @@ if (!empty($this->tour->nearest_trip->hotels) && !$this->tour->is_group_tour)
 					</div>
 				</td>
 				<td class="center">
-					<a href="<?php echo $this->tour->order; ?>?trip=<?php echo $schedule->id; ?>" target="_blank"
+					<a href="<?php echo $schedule->order ?>" target="_blank"
 					   class="btn btn-primary">
 						<?php echo Text::_('COM_JATOMS_BUY'); ?>
 					</a>
