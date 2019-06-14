@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
@@ -33,6 +34,12 @@ class com_jatomsInstallerScript
 	{
 		// Check databases
 		$this->checkTables($parent);
+
+		// Clean caches
+		if ($type == 'update')
+		{
+			$this->cleanCaches();
+		}
 	}
 
 	/**
@@ -60,6 +67,25 @@ class com_jatomsInstallerScript
 				{
 					Log::add(Text::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $e->getMessage()), Log::WARNING, 'jerror');
 				}
+			}
+		}
+	}
+
+	/**
+	 * Method to clean caches after update.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function cleanCaches()
+	{
+		JLoader::register('JAtomSHelperCache', JPATH_SITE . '/components/com_jatoms/helpers/cache.php');
+		$folders = JAtomSHelperCache::$paths;
+		foreach ($folders as $folder)
+		{
+			$folder = str_replace('administrator/', '', $folder);
+			if (Folder::exists($folder))
+			{
+				Folder::delete($folder);
 			}
 		}
 	}
