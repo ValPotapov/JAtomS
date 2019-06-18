@@ -117,7 +117,7 @@ class JAtomSModelBooking extends ItemModel
 			{
 				$tour     = $this->getTour();
 				$showcase = $this->getShowcase();
-				$api      = JAtomSHelperApi::getTourBooking($tour->id, $showcase->key, $pk);
+				$api      = JAtomSHelperApi::getTourBooking($tour->id, $showcase->key, $pk, $tour->is_group_tour);
 				$data     = ($api->get('status', 'error') !== 'error') ? $api->toObject() : false;
 
 				if (empty($data))

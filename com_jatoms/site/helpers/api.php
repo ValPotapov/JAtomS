@@ -215,7 +215,7 @@ class JAtomSHelperApi
 
 				// Set value
 				self::$_tour[md5($id . '_' . $locale)]    = $registry;
-				self::$_tour[md5($alias. '_' . $locale)] = $registry;
+				self::$_tour[md5($alias . '_' . $locale)] = $registry;
 			}
 			else
 			{
@@ -225,8 +225,8 @@ class JAtomSHelperApi
 				$alias    = $tour->slug;
 
 				// Set value
-				self::$_tour[md5($id. '_' . $locale)]    = $registry;
-				self::$_tour[md5($alias. '_' . $locale)] = $registry;
+				self::$_tour[md5($id . '_' . $locale)]    = $registry;
+				self::$_tour[md5($alias . '_' . $locale)] = $registry;
 			}
 		}
 
@@ -280,14 +280,14 @@ class JAtomSHelperApi
 	 * @param   integer  $tour_id       The id of the tour.
 	 * @param   string   $showcase_key  Showcase Api key.
 	 * @param   integer  $trip          The id of the schedule.
+	 * @param   bool     $group         Is group tour.
 	 *
-	 * @throws  Exception
-	 *
+	 * @throws Exception
 	 * @return  Registry|false Booking data as Registry object on success, false on failure.
 	 *
 	 * @since  __DEPLOY_VERSION__
 	 */
-	public static function getTourBooking($tour_id = null, $showcase_key = null, $trip = null)
+	public static function getTourBooking($tour_id = null, $showcase_key = null, $trip = null, $group = false)
 	{
 		if (empty($showcase_key))
 		{
@@ -300,15 +300,16 @@ class JAtomSHelperApi
 				Text::_('COM_JATOMS_ERROR_API_EMPTY_TOUR_ID')));
 		}
 
+		$type   = ($group) ? 'request_constructor' : 'package_constructor';
 		$locale = self::getLocale();
-		$key    = $tour_id . '_' . $trip . '_' . $locale;
+		$key    = $tour_id . '_' . $trip . '_' . $type . '_' . $locale;
 		$hash   = md5($key);
 		if (!isset(self::$_tourBooking[$hash]))
 		{
 			if (!$context = JAtomSHelperCache::getData('tour_booking', $key))
 			{
 				$url = 'https://' . self::$host . '/api/' . self::$version . '/' . $showcase_key . '/search/tour/'
-					. $tour_id . '/package_constructor';
+					. $tour_id . '/' . $type;
 
 				$query           = array();
 				$query['locale'] = $locale;
