@@ -223,7 +223,7 @@ class JAtomSViewShowcase extends HtmlView
 		// Set meta image
 		if ($current && $this->params->get('menu-meta_image'))
 		{
-			$this->document->setDescription($this->params->get('menu-meta_image'));
+			$this->document->setMetadata('image', $this->params->get('menu-meta_image'));
 		}
 		elseif (!empty($showcase->images->get('icon')))
 		{
