@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Joomla Atom-S Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.1.0
  * @author     Septdir Workshop - septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -74,7 +74,7 @@ class com_jatomsInstallerScript
 	/**
 	 * Method to clean caches after update.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected function cleanCaches()
 	{

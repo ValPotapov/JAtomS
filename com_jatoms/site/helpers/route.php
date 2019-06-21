@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Joomla Atom-S Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.1.0
  * @author     Septdir Workshop - septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -21,7 +21,7 @@ class JAtomSHelperRoute extends RouteHelper
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected static $_showcaseItemid = array();
 
@@ -105,7 +105,7 @@ class JAtomSHelperRoute extends RouteHelper
 	 * @throws Exception
 	 * @return  string  Booking view link.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public static function getBookingRoute($tour_id = null, $showcase_id = null, $trip = null)
 	{

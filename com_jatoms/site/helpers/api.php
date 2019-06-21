@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Joomla Atom-S Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.1.0
  * @author     Septdir Workshop - septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -69,7 +69,7 @@ class JAtomSHelperApi
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected static $_tourBooking = array();
 
@@ -87,7 +87,7 @@ class JAtomSHelperApi
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected static $_hotelImage = array();
 
@@ -285,7 +285,7 @@ class JAtomSHelperApi
 	 * @throws Exception
 	 * @return  Registry|false Booking data as Registry object on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public static function getTourBooking($tour_id = null, $showcase_key = null, $trip = null, $group = false)
 	{
@@ -353,7 +353,7 @@ class JAtomSHelperApi
 	 *
 	 * @return  string|false Tour image src on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public static function getHotelImage($pk = null, $src = null)
 	{

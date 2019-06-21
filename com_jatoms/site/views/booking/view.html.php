@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Joomla Atom-S Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.1.0
  * @author     Septdir Workshop - septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -15,7 +15,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 
 class JAtomSViewBooking extends HtmlView
@@ -25,7 +24,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @var  Joomla\CMS\Object\CMSObject
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $state;
 
@@ -34,7 +33,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @var  Registry;
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public $params;
 
@@ -43,7 +42,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @var  object|false
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $booking;
 
@@ -52,7 +51,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @var  object|false
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $tour;
 
@@ -61,7 +60,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @var  object|false
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $showcase;
 
@@ -70,7 +69,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @var  MenuItem
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $menu;
 
@@ -79,7 +78,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public $pageclass_sfx;
 
@@ -92,7 +91,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public function display($tpl = null)
 	{
@@ -156,7 +155,7 @@ class JAtomSViewBooking extends HtmlView
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected function _prepareDocument()
 	{

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Joomla Atom-S Package
- * @version    __DEPLOY_VERSION__
+ * @version    1.1.0
  * @author     Septdir JATOMS - septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir JATOMS. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html

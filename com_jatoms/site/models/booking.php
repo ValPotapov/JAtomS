@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Joomla Atom-S Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.1.0
  * @author     Septdir Workshop - septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -27,7 +27,7 @@ class JAtomSModelBooking extends ItemModel
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $_context = 'jatoms.booking';
 
@@ -36,7 +36,7 @@ class JAtomSModelBooking extends ItemModel
 	 *
 	 * @var  object
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $_tour = null;
 
@@ -45,7 +45,7 @@ class JAtomSModelBooking extends ItemModel
 	 *
 	 * @var  object
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $_showcase = null;
 
@@ -54,7 +54,7 @@ class JAtomSModelBooking extends ItemModel
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected function populateState()
 	{
@@ -100,7 +100,7 @@ class JAtomSModelBooking extends ItemModel
 	 *
 	 * @return  object|boolean|Exception  Booking object on success, false or exception on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -167,7 +167,7 @@ class JAtomSModelBooking extends ItemModel
 	 *
 	 * @return  object|boolean|Exception  Tour object on success, false or exception on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public function getTour($pk = null)
 	{
@@ -232,7 +232,7 @@ class JAtomSModelBooking extends ItemModel
 	 *
 	 * @return  object|boolean|Exception  Showcase object on success, false or exception on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public function getShowcase($pk = null)
 	{
