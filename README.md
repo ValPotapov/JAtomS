@@ -44,32 +44,3 @@ Website: [www.atom-s.com](https://atom-s.com)
 * Professional tour search
 * Inventory management
 * CRM system to control all orders
-
-## Professional version
-On request we provide installation Professional version service.  
-Installation cost: **$650**
-
-### Included in the service
-* Install and configure Joomla CMS on your hosting
-* Install and configure the JAtomS component
-* Add showcases from the list
-* Installing YooThemePro
-* Child template and style for YooThemePro
-* Customize site color scheme according to the company colors
-* Tours calendar module
-* Creating a basic site structure
-* Creating base home page (hero, showcase, calendar)
-
-### Additional services
-The cost of additional services is negotiated separately.
-* Filling the site with content provided by the customer
-* Creation of an exclusive website design
-* Editorial processing of tour descriptions
-* Create unique content for landing pages
-* Basic technical support. (Updates, critical bug fixes)
-* Full site support
-* Website promotion
-* Hosting for the site
-
-### How to order
-To consult or order a professional version, please contact us by email [hello@atom-s.com](mailto:hello@atom-s.com)
