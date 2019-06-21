@@ -1,6 +1,6 @@
 /*
  * @package    Joomla Atom-S Showcases Module
- * @version    1.1.0
+ * @version    __DEPLOY_VERSION__
  * @author     Septdir Workshop - septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
